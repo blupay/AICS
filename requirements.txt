@@ -6,8 +6,6 @@ PyICU==1.4
 South==0.7.6
 Whoosh==0.3.18
 anyjson==0.3.3
-apt-xapian-index==0.44
-aptoncd==0.1.98-bzr117-1.2
 boto==2.13.3
 dj-database-url==0.2.0
 django-common-helpers==0.3
