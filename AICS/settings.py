@@ -9,7 +9,7 @@ SITE_ROOT=os.path.dirname(os.path.realpath(__file__))
 
 #djcelery.setup_loader()
 
-DEBUG = True if os.environ.get('DJANGO_DEBUG', None) == '1' else False
+DEBUG = True 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -70,53 +70,49 @@ USE_TZ = True
 # Example: "/home/media/media.lawrence.com/media/"
 
 
-if not DEBUG:
-    # Access information for the S3 bucket
-    AWS_ACCESS_KEY_ID = os.environ['AKIAJ74LCB66L66FPHGA']
-    AWS_SECRET_ACCESS_KEY = os.environ['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']
-    AWS_STORAGE_BUCKET_NAME = os.environ['aicsfiles']
-    AWS_S3_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME
 
-    # Static files are stored in the bucket at /static
-    # and user-uploaded files are stored at /media
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-    DEFAULT_S3_PATH = 'media'
-    STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
-    STATIC_S3_PATH = 'static'
-    AWS_S3_SECURE_URLS = False
-    AWS_QUERYSTRING_AUTH = False
 
-    # Construct the paths to resources on S3 via
-    # the bucket name and the necessary paths
-    MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
-    MEDIA_URL = '//%s.s3.amazonaws.com/%s/' % \
-            (AWS_STORAGE_BUCKET_NAME, DEFAULT_S3_PATH)
-    STATIC_ROOT = '/%s/' % STATIC_S3_PATH
-    STATIC_URL = '//%s.s3.amazonaws.com/%s/' % \
-            (AWS_STORAGE_BUCKET_NAME, STATIC_S3_PATH)
-    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-else:
 
-	MEDIA_ROOT = 'smedia/'
+
+AWS_ACCESS_KEY_ID = "AKIAJ74LCB66L66FPHGA"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "aicsfiles"
+AWS_S3_CUSTOM_DOMAIN = "aicsfiles"
+AWS_REDUCED_REDUNDANCY = False # We enable this server-wide on our staging server's S3 buckets
+AWS_PRELOAD_METADATA = True # You want this to be on!
+AWS_S3_SECURE_URLS = False
+AWS_HEADERS = { 'Cache-Control': 'max-age=2592000' }
+AWS_QUERYSTRING_AUTH = False
+
+
+MY_DEFAULT_STORAGE = 'crew.s3storage.S3BotoStorage' # Used below
+DEFAULT_FILE_STORAGE = MY_DEFAULT_STORAGE
+COMPRESS_STORAGE = MY_DEFAULT_STORAGE # use with django-compressor
+STATICFILES_STORAGE = MY_DEFAULT_STORAGE # use with django-staticfiles
+FILER_PUBLICMEDIA_STORAGE = 'crew.example_prefixes.filer_storage_s3' # user with django-filer
+# Finally, we want to use reduced redundancy storage for all thumbnails:
+FILER_PUBLICMEDIA_THUMBNAIL_STORAGE = 'crew.example_prefixes.filer_thumb_storage_s3'
+THUMBNAIL_DEFAULT_STORAGE = 'crew.example_prefixes.S3BotoStorageReducedRedundancy'
+
+
+MEDIA_ROOT = 'smedia/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-	MEDIA_URL = '/smedia/'
+MEDIA_URL = '/smedia/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-	STATIC_ROOT = 'static/'
+STATIC_ROOT = 'static/'
 
 
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-	STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -235,6 +231,7 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'filer',
     'mptt',
+    'storages',
     
     #'djcelery',
     #'scheduler',
