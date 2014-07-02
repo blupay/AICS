@@ -1,0 +1,118 @@
+{% extends "portal/certificate.html" %}
+
+{%block title%}<title>CERTIFICATE </title> {%endblock title%}
+
+
+
+ {% block content %}	 
+<div class = "container"style="background-color:;background: #035F8B url(/static/images/bg1.jpg) repeat; text-align:center;">  <h3>Welcome to CertManager</h3></div>  
+  
+ <div class="container" style ="height:530px;background: #035F8B url(/static/images/bg1.jpg) repeat;  background-color :;">
+
+  <div class="container" style="background-color:;"> 
+ <form class="navbar-search" style = ""action="/certificate/search/" method="GET">
+          
+            <input type="text" class="form-search" placeholder="Search Cert" name="search_item"><i class="icon-search"></i>
+            
+          </form> </div>
+  
+   <div class="container" style="background-color:;">
+  	
+  		 <div class="span3" style="background-color:; margin-left:0px; ">  		
+  		   <div  class ="well" style="background-color: ;">
+           <ul class="nav nav-list" style="background-color: ; margin-left:-15px;">
+             
+              <li  class="nav-header">VESSEL CERTIFICATES</li>
+              <li ><a href="/certificate" target="">All Certificates ({{kert.count}})</a></li>
+              <li ><a href="/certificate/cert_expired" target="">Expired Certificates ({{expired_cert.count}})</a></li>
+               <li class="active"><a href="/certificate/cert_critical" target="">Critical Certificates ({{cert_critical.count}})</a></li>
+             
+              <li><a href="/aics_portal">General</a></li>
+              
+            </ul>
+            </div>
+         
+  		 
+  		  </div>
+
+    			<div class="span9" style="position: ; background-color:; margin-top:0px;">
+      			<!--Sidebar content-->						
+               
+                
+<!--<ul class="breadcrumb" style  = " position:relative;">-->
+<table class ="table table-striped table-bordered table-condensed " style = "width:; background-color:white; margin-top:0px; margin-left:-20px;"> 
+
+  <div>
+     <tr>
+  <th><a  style  = " position:relative;margin-left:0px;">CERT CODE</a></th>
+  <th><a style  = " position:relative;margin-left:0px;"> NAME</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">DATE ISSUED</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">EXPIRE STATUS</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">EXPIRY DATE</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">REVISED DATE</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">DETAILS</a></th>
+  
+
+	</tr>
+		<tbody>
+			</div>
+			 
+  {% for c in cert_critical %}
+<tr>
+  <td><a href="/cert_details/{{c.id}}/True" target="" >{{c.certificate_code }}</a></td>
+  <td>{{c.document_name}}</td>
+  <td>{{c.Issuedate}}</td>
+  
+  <td>
+       {% ifequal c.expire_status 1 %}
+ <img src="/static/images/ok.png" />(Not Expired)
+ 
+       {%else%}
+  <img src="/static/images/error_small.png" />(Has Expired)
+       {%endifequal%}
+  </td> 
+  
+  <td>{{c.Expiringdate}}</td>
+  <td>{{c.Last_Annual_Revision_date}}</td>
+ 
+ 
+ 
+ <td>  
+
+ <a href="/cert_details/{{c.id}}/True" target="" >  Click to view attachment(s)
+ 
+ </a>
+  </td>
+
+  
+</tr>
+</p>
+
+{% endfor %}
+</tbody>
+
+</table>
+
+  <div class="pagination-centered"  style="">
+    <span class="step-links">
+        {% if cert_criticaL.has_previous %}
+            <a href="?page={{ cert_criticaL.previous_page_number }}">previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ cert_criticaL.number }} of {{ cert_criticaL.paginator.num_pages }}.
+        </span>
+
+        {% if cert_criticaL.has_next %}
+            <a href="?page={{ cert_criticaL.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>  
+</div>
+</div>
+
+</div>
+
+  
+	 
+	  {% endblock %}

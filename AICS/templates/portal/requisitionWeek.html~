@@ -1,0 +1,283 @@
+{% extends "portal/requisition.html" %}
+
+{%block title%}<title>REQUISITION </title> {%endblock title%}
+
+
+	
+
+ 
+     {% block content %}
+   
+     
+    {% ifnotequal stephen '' %}
+   <div class="modal hide fade" id="myModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">x</button>
+    <h3></h3>
+  </div>
+  <div class="modal-body">
+ 
+ 
+<div class="span3" style="background-color:; margin-left:0px;">
+<p> ID <b style="font-color:red;">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp  000{{week_rqst_detail.requisition_ID}}</b></p>
+<p> Requisition By <b>&nbsp &nbsp {{week_rqst_detail.requisitioner}}</b></p>
+<p> Department <b>&nbsp &nbsp &nbsp &nbsp{{week_rqst_detail.department}}</b></p>
+
+
+</div>  
+<div class="span2" >  
+<p> Status <b>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp{{week_rqst_detail.status}}</b></p>
+<p> Order date <b>&nbsp &nbsp &nbsp &nbsp &nbsp{{week_rqst_detail.order_state}}</b></p>
+
+   </div>
+
+
+
+<div class="span4"style="margin-left:0px; background-color: ;">
+
+<p> 
+<table class ="table table-striped table-bordered table-condensed " style = "width:; background-color:white; margin-top:0px;"> 
+
+  <thead>
+   <tr>
+  <th><a  style  = " position:relative;margin-left:0px;">QUANTITY </a></th>
+  <th><a style  = " position:relative;margin-left:0px;">UNIT</a></th>
+ 
+  <th><a  style  = " position:relative;margin-left:0px;">ITEM</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">QUOTE</a></th>
+  
+  
+
+	</tr>
+	</thead>
+		<tbody>
+
+ {% for c in week_order_detail %}
+<tr>
+  <td>{{c.quantity}}</td>
+  <td>{{c.unit}}</td>
+  {%ifequal c.item None%}
+  <td>{{c.other}}</td>
+  {%else%}
+  <td>{{c.item}}</td>
+  {%endifequal%}
+  <td>{{c.quote}}</td>  
+  </tr>
+ 
+ {% endfor %}
+
+</tbody>
+</table>
+</p>
+
+
+
+         
+    
+   
+    
+    
+  </div>
+ 
+ <div     class="span3" style="margin-left:0px; background-color:;">
+<form class="form-horizontal" style=""  action="." method="post">
+		<fieldset>
+	    {% for field in wk_request_form %}
+							
+							<div class="fieldWrapper" style="margin-left:; background-color:;">
+            {{ field.errors }} {{ field }} &nbsp Check to Approve
+           
+            </div>
+    {% endfor %}
+		
+	
+		 
+    
+     
+     	
+	
+          <button style="margin-top:10px; margin-left:;"class="btn btn-primary" type="submit" value="" >
+        <b>Submit</b></button>     	
+     	</fieldset>
+     	
+  	</form>
+
+
+ </div>
+ 
+ 
+  
+  </div>
+  <div class="modal-footer">
+    <a href="/requisition/week/" class="btn" data-dismiss="modal">Close</a>
+  </div>
+</div>
+     {% endifnotequal %}
+     
+      
+   
+   
+   
+   
+   
+   
+<div class = "container"style="background-color:#C0C0C0;text-align:center;">  <h3>Welcome to Requisitions</h3></div>  
+  
+ <div class="container" style ="height:530px; background-color : ;">
+
+ 
+          
+  	 <div class="container" style="background-color:;">
+  		  <div class="span3" style="background-color:; margin-left:0px; ">  		
+  		   <div  class ="well" style="background-color: ;">
+           <ul class="nav nav-list" style="background-color: ; margin-left:-15px;">
+               <li class=""><a  href ="/aics_portal"><i class="icon-home"></i>Main Page</a></li>
+              <li class=""><a  href ="/requisition"><i class="icon-file"></i>Requisitions</a></li>
+             <!-- <li class=""><a  href ="/requisition/today/"><i class="icon-book"></i>Today({{requisitions_tod.count}} Pending)</a></li>
+              <li  class="active"><a href="/requisition/week/" > <i class="icon-book"> </i>This Week({{requisitions_week.count}} Pending)</a></li>
+               <li><a href="/requisition/month/" ><i class="icon-book"></i>This Month ({{requisitions_month.count}})</a></li>
+               <li><a href="/requisition/year/" ><i class="icon-book"></i>This Year ({{requisitions_year.count}})</a></li>
+               <li><a href="/requisition/all/" ><i class="icon-book"></i>All ({{requisitions_all.count}})</a></li>
+              <li class=""><a  href ="/aics_portal"><i class="icon-book"></i>Main Page</a></li>
+              
+              -->
+           
+         
+         <div class="accordion" id="accordion2" style="background-color:white">
+			<div class="accordion-group">
+					<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+									<i class="icon-hand-down"></i> Today
+											</a>
+						</div>
+					<div id="collapseOne" class="accordion-body collapse in">
+						<div class="accordion-inner">
+				<li><a  href ="/requisition/today/">Pending ({{requisitions_tod.count}})</a></li>
+				<li> <a  href ="/requisition/today/approved/">Approved ()</a></li>
+				<li> <a  href ="/requisition/today/all/">All ({{requisitions_tod_all.count}})</a></li>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-group">
+						<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+						<i class="icon-align-right"></i> This Week
+							</a>
+						</div>
+						<div id="collapseTwo" class="accordion-body collapse">
+						<div class="accordion-inner">
+				<li style="background-color:#BDC8E6;" ><a href="/requisition/week/" >Pending ({{requisitions_week.count}})</a></li>
+				<li>Approved ()</li>
+				<li>All ()</li>
+							</div>
+						</div>         
+ 						</div>
+ 						
+               <div class="accordion-group">
+						<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+						<i class="icon-calendar"></i> This Month
+							</a>
+						</div>
+						<div id="collapseThree" class="accordion-body collapse in">
+						<div class="accordion-inner">
+				<li>Pending ({{requisitions_month.count}})</li>
+				<li>Approved ({{requisitions_month.count}})</li>
+				<li>All ({{requisitions_month.count}})</li>
+							</div>
+						</div>         
+ 						</div> 						
+ 						<div class="accordion-group">
+						<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+						<i class="icon-align-justify"></i> All
+							</a>
+						</div>
+						<div id="collapseFour" class="accordion-body collapse in">
+						<div class="accordion-inner">
+				<li>Pending ({{requisitions_all.count}})</li>
+				<li>Approved ()</li>
+				<li>All ()</li>
+							</div>
+						</div>         
+ 						</div> 	
+ 						
+ 						
+ 						
+ 						
+ 						
+ 					
+ 					</div>         </ul>
+            </div>
+  		 
+  		  </div>
+
+    			<div class="span9" style="position: ; background-color:black; margin-top:0px;">
+      			<!--Sidebar content-->
+      <table class ="table table-striped" style = "width:; background-color:white; margin-top:0px; margin-left: -20px;"> 
+
+  <thead>
+     <tr>
+  <th><a  style  = " position:relative;margin-left:0px;">ID</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">DEPARTMENT</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">BY </a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">ORDER DATE</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">ORDER STATE</a></th>
+  
+  
+  
+
+	</tr>
+	</thead>
+		<tbody>
+	
+			 
+  {% for c in requisitions_week %}
+	<tr>
+  <td>{{c.requisition_ID}}</td>
+  <td>{{c.department}}</td>
+   <td>{{c.requisitioner}}</td>
+   <td>{{c.order_date}}</td>
+   <td>{{c.order_state}}</td>  
+   <td><a href="/requisition/week/details/{{c.requisition_ID}}/True" >View details</a> </td>
+   </tr>
+ 
+
+{% endfor %}
+</tbody>
+</table>
+           
+                 
+                
+            
+            
+             
+             
+           
+             
+          
+
+		
+  		
+  
+
+
+
+
+
+
+
+
+</div>
+
+
+
+</div>
+</div>
+
+  
+
+
+     {% endblock %}
+
+ 

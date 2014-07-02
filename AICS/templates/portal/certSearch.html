@@ -1,0 +1,96 @@
+{% extends "portal/certificate.html" %}
+
+{%block title%}<title>CERTIFICATE </title> {%endblock title%}
+
+
+	 {% block content %}
+  
+ <div class = "container"style="background-color:; background: #035F8B url(/static/images/bg1.jpg) repeat; text-align:center;">  <h3>Welcome to CertManager</h3></div>
+ <div class="container" style="background: #035F8B url(/static/images/bg1.jpg) repeat; background-color:;">
+ 
+ 
+ <div class="container" style="background-color:;"> 
+ <form class="navbar-search" style = ""action="/certificate/search/" method="GET">
+          
+            <input type="text" class="form-search" placeholder="Search Cert" name="search_item"><i class="icon-search"></i>
+            
+          </form> </div>
+          
+          
+          
+  	<div class="container" style="background-color:;">
+  		  <div class="span3" style="background-color:; margin-left:0px; ">  		
+  		   <div  class ="well" style="background-color: ;">
+           <ul class="nav nav-list" style="background-color: ; margin-left:-15px;">
+             
+              <li  class="nav-header">VESSEL CERTIFICATES</li>
+              <li class="active"><a href="/certificate" target="">All Certificates ({{certs.count}})</a></li>
+              <li><a href="/certificate/cert_expired" target="">Expired Certificates ({{expired_cert.count}})</a></li>
+               <li><a href="/certificate/cert_critical" target="">Critical Certificates ({{cert_critical.count}})</a></li>
+             
+              <li><a href="/aics_portal">General</a></li>
+              
+            </ul>
+            </div>
+         
+  		 
+  		  </div>
+
+    			<div class="span9" style="position: ; background-color:; margin-top:0px;">
+      			<!--Sidebar content-->
+
+             <h3>SEARCH RESULTS ({{nCert.count}}) Found</h3><hr/>
+           <div id="demo" class="collapse in" style ="overflow:auto; "> … </div>
+
+             <div class=" container-fluid"    style = "margin-left:-30px; width:930px;"> 
+
+
+{% for c in cert %}
+
+<blockquote>
+
+	<a href="/cert_details/{{c.id}}/True" target=""><h4 style="text-align:justify;" >{{c}}</h4></a><br/>
+	<p style="font-size:14px; text-align:justify;" >
+	
+	
+	{{c}}<a  href="/cert_details/{{c.id}}/True" target="">...view full details</a></p>
+
+<div style =" width: 860px;"> 	<hr/> </div>
+</blockquote>
+{% endfor %}
+
+
+
+
+
+</div>
+                 
+     <div class="pagination-centered"  style="margin-top:150px;">
+    <span class="step-links">
+        {% if cert.has_previous %}
+            <a href="?page={{ cert.previous_page_number }}">previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ cert.number }} of {{ cert.paginator.num_pages }}.
+        </span>
+
+        {% if cert.has_next %}
+            <a href="?page={{ cert.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>       
+   
+</div>
+
+
+
+</div>
+</div>
+
+  
+
+
+     {% endblock %}
+
+ 

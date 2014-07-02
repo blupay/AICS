@@ -1,0 +1,25 @@
+{% extends "portal/requisition.html" %}
+
+{%block title%}<title>REQUISITION </title> {%endblock title%}
+
+
+	
+
+ 
+     {% block content %}
+<div class="modal hide fade" id="myModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">x</button>
+    <h3></h3>
+  </div>
+  <div class="modal-body">
+    {{requisitions_tod}}
+  </div>
+  <div class="modal-footer">
+    <a href="/requisition/today/" class="btn" data-dismiss="modal">Close</a>
+  </div>
+</div>
+
+     {% endblock %}
+
+ 

@@ -1,0 +1,57 @@
+{% extends "portal/mainpage.html" %}
+
+
+{% block content %}
+{%ifequal galore 'modal'%}
+<div class="modal hide fade" id="myModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">x</button>
+    <h3>AICS VMS USER CREATION MESSAGE STATUS</h3>
+  </div>
+  <div class="modal-body">
+    <p><h3>User with Username : [ {{us_n}} ] created successfully. 
+    {%ifequal superuser 'Yes'%}
+    <br>Please assign user to a group of permissions. <a href="/admin/auth/user/{{p_k}}/" target="_blank" >View</a> 
+    {%else%}
+    <br> Please Contact Administrator for user rights and privileges. 
+    {%endifequal%}
+     Thank you.
+     
+    </h3></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+  </div>
+</div>
+{%endifequal%}
+<div class= "container" style=" background: #035F8B url(/static/images/bg1.jpg) repeat; overflow:auto; width:1170px; height:800px; border:1px solid blue; background-color:; margin-top:; margin-bottom:;">
+
+<form class="form-horizontal" style="margin-left:50px; margin-bottom:100px;"  action="." method="post">
+		<fieldset>
+	   <legend> <b style="">Register a new user</b></legend>
+	  {% for field in form %}
+							
+							<div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+           
+            </div>
+    {% endfor %}
+    
+    
+		{{ form1.as_p }}
+		
+		 
+    
+     	<!--<input type="submit" value="Submit" value="Login!" />-->
+     	
+	
+          <button style="margin-left:0px; margin-top:40px;"class="btn btn-primary btn-large" type="submit" value="" >
+        <b>Sign Up</b></button>     	
+     	</fieldset>
+     	
+  	</form>
+        </div>
+
+
+{% endblock %}

@@ -1,0 +1,565 @@
+from django.db import models
+from django.contrib.admin.widgets import AdminDateWidget
+from suit.widgets import SuitDateWidget,LinkedSelect, SuitTimeWidget, SuitSplitDateTimeWidget,HTML5Input,AutosizedTextarea,EnclosedInput
+from suit.admin import SortableTabularInline
+from django.forms import ModelForm,TextInput 
+from django.db import models
+from django.contrib import admin
+from countries.models import Country
+from django.contrib.auth.models import User
+from datetime import date,time
+import datetime
+from aicsUser.models import *
+
+
+class Suppliers(models.Model):
+	supplier_ID        =  models.AutoField(primary_key=True,editable = False)
+	supplier_name       =  models.CharField('Supplier Name',max_length = 30,help_text ="This designates the name of the Supplier")
+	supplier_email       = models.EmailField('Email-address',blank = True, null = True)
+	supplier_phone	      = models.CharField('Telephone', max_length = 15, blank = True, null = True,unique =  True, help_text = "XXX-XXXXXXX")
+	supplier_cell_phone	   = models.CharField('Mobile', max_length = 15, blank = True, null = True,unique =  True, help_text = "XXX-XXXXXXX")
+	address			= models.TextField('Address', max_length = 60,blank = True, null = True,help_text = "")
+	city		 = models.CharField('City/Town', max_length = 30,blank = True, null = True)
+	country		=  models.ForeignKey(Country, default = "GH")
+	date_added	 = models.DateTimeField (auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField (auto_now=True, blank =True, null = True)
+
+	def supplier_number(self):
+    	      if self.supplier_ID <= 9:
+    	         return "SUP000%s" %(self.supplier_ID)
+    	      elif self.supplier_ID > 9 and self.supplier_ID < 100:
+    	         return "SUP00%s" %(self.supplier_ID)
+    	      elif self.supplier_ID > 99 and self.supplier_ID < 1000:
+    	         return "SUP0%s" %(self.supplier_ID)
+    	      elif self.supplier_ID > 999:
+    	         return "SUP%s" %(self.supplier_ID)
+    	      else:
+    	         return "SUP%s" %(self.supplier_ID)
+
+
+	def __unicode__(self):
+	      if self.supplier_ID <= 9:
+    	         return '[ SUP000%s ] %s' %(self.supplier_ID, self.supplier_name.upper())
+    	      elif self.supplier_ID > 9 and self.supplier_ID < 100:
+    	         return '[ SUP00%s ] %s' %(self.supplier_ID, self.supplier_name.upper())
+    	      elif self.supplier_ID > 99 and self.supplier_ID <1000:
+    	         return '[ SUP0%s ] %s' %(self.supplier_ID, self.supplier_name.upper())
+    	      elif self.supplier_ID > 999:
+    	         return '[ SUP%s ] %s' %(self.supplier_ID, self.supplier_name.upper())
+    	      else:
+    	         return '[ SUP%s ] %s' %(self.supplier_ID, self.supplier_name.upper())
+
+
+
+	class Meta:
+		verbose_name 	    = "Supplier"
+		verbose_name_plural = "Suppliers"
+		
+
+
+class Supplier_Addresses(models.Model):
+	supplier_address_ID	=  models.AutoField(primary_key=True,editable = False)
+	supplier_ID	 =  models.ForeignKey(Suppliers)	
+	address		= models.TextField('Address', max_length = 60,blank = True, null = True,help_text = "")
+	city		 = models.CharField('City/Town', max_length = 30,blank = True, null = True)
+	#zip_post_code	     = models.CharField('Zip/Postal Code',max_length = 7, blank = True, null = True,unique =  True,help_text = "")
+	#state_province		= models.CharField('State/Province', max_length = 30,blank = True, null = True)
+	country		=  models.ForeignKey(Country, default = "GH")
+	#address_type	= models.CharField('Address Type', 
+	#				   choices =(("General","General"),
+       #                                              ("Headquarters","Headquarters"),
+         #                                            ("Warehouse","Warehouse"),
+       #                                              ("Unknown","Unknown"),
+          #                                           ),
+           #                               max_length = 20)
+	#date_address_from         =  models.DateField('Address Date From',blank = True, null = True,help_text = "YYYY-MM-DD")
+	#date_address_to	       =  models.DateField('Address Date To',blank = True, null = True,help_text = "YYYY-MM-DD")
+	date_added	 = models.DateTimeField (auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField (auto_now=True, blank =True, null = True)
+
+	def __unicode__(self):
+    		return "%s" %(self.supplier_address_ID)
+
+
+
+	class Meta:
+		verbose_name 	    = "Supplier Address"
+		verbose_name_plural = "Supplier Addresses"
+		
+
+
+
+
+class Brands(models.Model):
+	brand_ID	= models.AutoField(primary_key=True,editable = False)
+	brand_short_name	=  models.TextField('Short Name',max_length = 10, help_text = "The short name of the Brand")
+	brand_full_name		=  models.TextField('Full Name',max_length = 40, help_text = "The full name of the Brand eg: Nikon, Olympus")
+	date_added	 = models.DateTimeField (auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField (auto_now=True, blank =True, null = True)
+
+	def brand_number(self):
+    	      if self.brand_ID <= 9:
+    	         return "BRND000%s" %(self.brand_ID)
+    	      elif self.brand_ID > 9 and self.brand_ID < 100:
+    	         return "BRND00%s" %(self.brand_ID)
+    	      elif self.brand_ID > 99 and self.brand_ID <1000:
+    	         return "BRND0%s" %(self.brand_ID)
+    	      elif self.brand_ID > 999:
+    	         return "BRND%s" %(self.brand_ID)
+    	      else:
+    	         return "BRND%s" %(self.brand_ID)
+
+
+	def __unicode__(self):
+	      if self.brand_ID <= 9:
+    	         return '[ BRND000%s ] %s' %(self.brand_ID, self.brand_short_name.upper())
+    	      elif self.brand_ID > 9 and self.brand_ID < 100:
+    	         return '[ BRND00%s ] %s' %(self.brand_ID, self.brand_short_name.upper())
+    	      elif self.brand_ID > 99 and self.brand_ID <1000:
+    	         return '[ BRND0%s ] %s' %(self.brand_ID, self.brand_short_name.upper())
+    	      elif self.brand_ID > 999:
+    	         return '[ BRND%s ] %s' %(self.brand_ID, self.brand_short_name.upper())
+    	      else:
+    	         return '[ BRND%s ] %s' %(self.brand_ID, self.brand_short_name.upper())
+
+
+	class Meta:
+		verbose_name 	    = "Brand"
+		verbose_name_plural = "Brands"
+
+
+class Ref_Item_Categories(models.Model):
+	item_category_code	= models.AutoField(primary_key=True,editable = False)
+        item_category_name      = models.CharField(max_length=60, unique=True, blank=False)
+	item_category_description = models.TextField('Category Description', max_length = 60,blank = True, null = True,help_text = "")
+        date_added	 = models.DateTimeField(auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField(auto_now=True, blank =True, null = True)
+
+	def __unicode__(self):
+    		return "%s" %(self.item_category_name.upper())
+
+
+	class Meta:
+		verbose_name 	    = "Reference Item Category"
+		verbose_name_plural = "Reference Item Categories"
+
+
+
+class Inventory_Items(models.Model):
+	item_ID		= models.AutoField(primary_key=True, editable = False)
+	brand_ID	= models.ForeignKey(Brands)
+	item_category	= models.ForeignKey(Ref_Item_Categories)
+	item_name       = models.CharField(max_length = 40,blank=  False, null =  False)
+	item_description	=  models.TextField('Item Description',max_length = 40, blank = True, null = True, help_text = "Other description of the item")
+	average_monthly_usage	= models.PositiveIntegerField(blank = True, null = True,help_text ="The average quantity of Items per month")
+	reorder_level		= models.PositiveIntegerField(blank = True, null = True,help_text ="The least number at which items needs to be ordered again")
+	reorder_quantity	= models.PositiveIntegerField(blank = True, null = True,help_text ="The number of items per an order")
+	date_added	 = models.DateTimeField (auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField (auto_now=True, blank =True, null = True)
+
+
+	
+	def item_number(self):
+    	      if self.item_ID <= 9:
+    	         return "ITM000%s" %(self.item_ID)
+    	      elif self.item_ID > 9 and self.item_ID < 100:
+    	         return "ITM00%s" %(self.item_ID)
+    	      elif self.item_ID > 99 and self.item_ID < 1000:
+    	         return "ITM0%s" %(self.item_ID)
+    	      elif self.item_ID > 999:
+    	         return "ITM%s" %(self.item_ID)
+    	      else:
+    	         return "ITM%s" %(self.item_ID)
+
+
+	def __unicode__(self):
+	        return '%s - %s' %(self.brand_ID.brand_short_name.upper(), self.item_description)
+    	     
+
+
+	
+
+	class Meta:
+		verbose_name 	    = "Inventory Item"
+		verbose_name_plural = "Inventory Items"
+
+			
+
+class Item_Stock_Levels(models.Model):
+	stock_ID	= models.AutoField(primary_key=True, editable=False)	
+	item_ID		= models.ForeignKey(Inventory_Items)
+	stock_taking_date	= models.DateTimeField(auto_now_add=True, blank =True, null = True)
+	quantity_in_stock	= models.PositiveIntegerField(blank = True, null = True, default= 0, help_text ="The number of items in stock")
+        
+	date_added	 = models.DateTimeField(auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField(auto_now=True, blank =True, null = True)
+
+
+
+	#def Qty_in_stock(self):
+	#	if Item_Suppliers.total_quantity_supplied > 0 and Order.quantity > 0:
+			 
+
+
+
+
+
+
+	def stock_number(self):
+    	      if self.stock_ID <= 9:
+    	         return "STK000%s" %(self.stock_ID)
+    	      elif self.stock_ID > 9 and self.stock_ID < 100:
+    	         return "STK00%s" %(self.stock_ID)
+    	      elif self.stock_ID > 99 and self.stock_ID <1000:
+    	         return "STK0%s" %(self.stock_ID)
+    	      elif self.stock_ID > 999:
+    	         return "STK%s" %(self.stock_ID)
+    	      else:
+    	         return "STK%s" %(self.stock_ID)
+
+
+	def __unicode__(self):
+	      if self.stock_ID <= 9:
+    	         return '[ STK000%s ]' %(self.item_ID)
+    	      elif self.stock_ID > 9 and self.stock_ID < 100:
+    	         return '[ STK00%s ]' %(self.stock_ID)
+    	      elif self.stock_ID > 99 and self.stock_ID <1000:
+    	         return '[ STK0%s ]' %(self.stock_ID)
+    	      elif self.stock_ID > 999:
+    	         return '[ STK%s ]' %(self.stock_ID)
+    	      else:
+    	         return '[ STK%s ]' %(self.stock_ID)
+
+	class Meta:
+		verbose_name 	    = "Item Stock Level"
+		verbose_name_plural = "Item Stock Levels"
+
+
+class Item_Suppliers(models.Model):
+	item_supply_ID	= models.AutoField(primary_key=True,editable = False)
+	item_ID		= models.ForeignKey(Inventory_Items)
+	supplier_ID	= models.ForeignKey(Suppliers)
+	quantity_supplied	= models.PositiveIntegerField('Number of Items',blank = True, null = True,help_text ="The number of items to be added")
+	#total_quantity_supplied    = models.PositiveIntegerField('Total Quantity',blank = True, default= 0, null = True,help_text ="The total number of items in stock")
+	#first_item_supplied_date
+	#last_item_supplied_date
+	delivery_lead_time		= models.PositiveIntegerField('Delivery Lead Time', default= 0, blank = True, null = True,help_text ="The number of days for the items to be delivered")
+	standard_price			= models.FloatField('Unit Price',default=0.0, blank = True, null = True,help_text ="The standard or unit price of the item")
+	percentage_discount		= models.FloatField('Percentage Discount',default=0.0, blank = True, null = True,help_text ="The percentage discount of the item")
+	minimum_order_quantity		= models.PositiveIntegerField('Minimum Order Quantity', default= 0, blank = True, null = True,help_text ="The number of items in stock")
+	maximum_order_quantity		= models.PositiveIntegerField('Maximum Order Quantity', default= 0, blank = True, null = True,help_text ="The number of items in stock")
+	item_supply_date		= models.DateTimeField ('Supply Date', blank =True, null = True)
+	
+	date_added	 = models.DateTimeField (auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField (auto_now=True, blank =True, null = True)
+      
+
+	def item_supply_number(self):
+    	      if self.item_supply_ID <= 9:
+    	         return "ITSP000%s" %(self.item_supply_ID)
+    	      elif self.item_supply_ID > 9 and self.item_supply_ID < 100:
+    	         return "ITSP00%s" %(self.item_supply_ID)
+    	      elif self.item_supply_ID > 99 and self.item_supply_ID <1000:
+    	         return "ITSP0%s" %(self.item_supply_ID)
+    	      elif self.item_supply_ID > 999:
+    	         return "ITSP%s" %(self.item_supply_ID)
+    	      else:
+    	         return "ITSP%s" %(self.item_supply_ID)
+
+
+	def __unicode__(self):
+	      if self.item_supply_ID <= 9:
+    	         return '[ ITSP000%s ] ' %(self.item_supply_ID)
+    	      elif self.item_supply_ID > 9 and self.item_supply_ID < 100:
+    	         return '[ ITSP00%s ] ' %(self.item_supply_ID)
+    	      elif self.item_supply_ID > 99 and self.item_supply_ID <1000:
+    	         return '[ ITSP0%s ] ' %(self.item_supply_ID)
+    	      elif self.item_supply_ID > 999:
+    	         return '[ ITSP%s ] ' %(self.item_supply_ID)
+    	      else:
+    	         return '[ ITSP%s ] ' %(self.item_supply_ID)
+
+
+	class Meta:
+		verbose_name 	    = "Item Supplier"
+		verbose_name_plural = "Item Suppliers"
+
+
+class Supplies_Requisition(models.Model):
+	requisition_ID		= models.AutoField(primary_key=True, editable=False)
+	#item_category		= models.ForeignKey(Ref_Item_Categories)
+	'''requisitioner		= models.CharField('Crew Speciality', 
+					   choices =(("Captain","Captain"),
+                                                     ("Cook","Cook"),
+                                                     ("Machine_Head","Machine_Head"),
+                                                     ("Boat_Swain","Boat_Swain"),
+                                                     ("Sailor","Sailor"),),
+                                            max_length = 15)'''
+	requisitioner   = models.CharField(max_length = 20)
+	last_updated_by =  models.CharField("Last Updated by",max_length = 70,help_text ="This designate the user of the system who last made changes to this data",blank= True,null=True)
+        department      = models.CharField(max_length = 30,blank =True, null = True)
+	#supplier		= models.ForeignKey(Suppliers)
+	order_date		= models.DateField(default = datetime.datetime.now(),help_text = "Leave blank if Today",blank = True, null = True)
+        status                  = models.CharField('STATUS', 
+					   choices =(("Pending Approval","Pending Approval"),
+                                                     ("Approved","Approved"),
+						     ("Denied","Denied"),
+						     ("Received","Received"),
+                                                     ),
+                                            max_length = 30, default = "Pending Approval")
+        check                 = models.BooleanField(default =False, help_text = "CHECK TO APPROVE") 
+        
+        Received              = models.CharField(choices = (("YES","YES"),("NO","NO")),default = "NO",max_length = 3)
+	order_state           = models.CharField( 
+					   choices =(("URGENT","URGENT"),
+                                                     ("MINOR","MINOR"),
+						     ("CRITICAL","CRITICAL"),
+                                                     ),max_length = 30 )
+	reason_for_required_item	=  models.TextField('Reason for request',blank = True, null = True,max_length = 40, help_text = "Brief and specific")
+	date_added	 = models.DateTimeField (auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField (auto_now=True, blank =True, null = True)
+	
+	
+	def __unicode__(self):
+    		#return "[%s] %s" %(self.requisition_ID,self.date_added.strftime("%b %d, %Y, %I:%M %p"))
+		return "[%s]  %s" %(self.requisition_ID,self.date_added.strftime("%b %d, %Y"))
+
+
+	class Meta:
+		verbose_name = "Supplies Requisition"
+		verbose_name_plural = "Supplies Requisitions"
+
+        def approve(self):
+	     if self.check is False:
+	          self.status = "Pending Approval"
+	     else:
+	         self.status  ="Approved"
+	
+	def view(self):
+	     return "click to view"   
+	     
+	
+	def save(self,*args,**kwargs):
+	        obj   = Supplies_Requisition()
+	           
+	               
+		#self.presupuesto.total = self.presupuesto.calclular_total()
+		#self.budget.total = self.budget.calclular_total() 
+		self.approve()
+		#self.received() 
+    		super(Supplies_Requisition,self).save(*args, **kwargs)
+		#self.presupuesto.save()
+		return True
+	 
+
+
+class Order(models.Model):
+	ref		= models.AutoField(primary_key=True, editable=False)
+	quantity	= models.PositiveIntegerField('Quantity',default= 0, blank = True, null = True,help_text ="The quantity of items needed")	
+	unit		= models.CharField('Unit', max_length=15,blank = True, null = True,help_text ="PCS/VOL/PAIR...")
+	item	        = models.ForeignKey(Inventory_Items, related_name="Item_ID",blank =True, null=True)
+	other           = models.CharField(max_length = 50, help_text = "Indicate Item if not in inventory",blank = True, null = True)
+	#stock_num	= models.ForeignKey(Item_Stock_Levels)
+	#cost		= models.FloatField(blank=True, null=True, default= 0.0)
+	#total		= models.FloatField(blank=True, null=True, default= 0.0)
+	date_of_order	= models.ForeignKey(Supplies_Requisition)
+	#date_of_order1  = models.ForeignKey(Crew_Requisition, related_name = "request")
+	quote		= models.CharField('Quote', max_length=15,blank = True, null = True,help_text ="")
+        date_added	 = models.DateTimeField (auto_now_add=True, blank =True, null = True)
+        date_updated     = models.DateTimeField (auto_now=True, blank =True, null = True)
+	
+	
+	
+
+	def order_number(self):
+    	      if self.ref <= 9:
+    	         return "ORD000%s" %(self.ref)
+    	      elif self.ref > 9 and self.ref < 100:
+    	         return "ORD00%s" %(self.ref)
+    	      elif self.ref > 99 and self.ref <1000:
+    	         return "ORD0%s" %(self.ref)
+    	      elif self.ref > 999:
+    	         return "ORD%s" %(self.ref)
+    	      else:
+    	         return "ORD%s" %(self.ref)
+
+
+	def __unicode__(self):
+	      if self.ref <= 9:
+    	         return '[ ORD000%s ] ' %(self.ref)
+    	      elif self.ref > 9 and self.ref < 100:
+    	         return '[ ORD00%s ] ' %(self.ref)
+    	      elif self.ref > 99 and self.ref <1000:
+    	         return '[ ORD0%s ] ' %(self.ref)
+    	      elif self.ref > 999:
+    	         return '[ ORD%s ] ' %(self.ref)
+    	      else:
+    	         return '[ ORD%s ] ' %(self.ref)
+
+
+        '''def Total_Cost(self):
+		if self.quantity >= 0 and self.cost >= 0.0:
+			self.total = "%s" %( float(self.quantity) * float(self.cost) )
+			self.save()
+			return "%s" %(self.total)
+		else:
+			raise Exception("Invalid numbers for [quantity] or [cost] field")'''
+
+
+	class Meta:
+		verbose_name = ("Order")
+		verbose_name_plural = ("Orders")
+		#ordering = ("Number")
+		
+class ContractfileForm(ModelForm):
+    class Meta:
+       
+        widgets = {
+           
+            'brand_full_name': AutosizedTextarea,
+            'brand_short_name': AutosizedTextarea,
+            
+        }
+
+
+
+class requestForm(ModelForm):
+    class Meta:
+        #model = Supplies_Requisition
+        widgets = {
+           
+            'reason_for_required_item': AutosizedTextarea,
+            'order_date':AdminDateWidget,
+            
+        }
+
+class OrderInline(admin.TabularInline):
+      model = Order
+      readonly_fields = ('date_of_order',)
+      fieldsets       = (
+		(None, {"fields": ('quantity','unit','item','other','quote','date_of_order')}),
+		
+	)
+      suit_classes = 'suit-tab suit-tab-orders'
+
+class Supplier_AddressesInline(admin.TabularInline):
+      model = Supplier_Addresses
+
+class Suppliers_Admin(admin.ModelAdmin):
+      list_display      =('supplier_number','supplier_name','supplier_email','supplier_phone','supplier_cell_phone','date_added','date_updated')
+      search_fields     = ['supplier_name','supplier_ID','supplier_phone','supplier_cell_phone']
+      list_filter       = ('supplier_ID','date_added',)
+      ordering          = ('-date_added',)
+      date_hierarchy    = 'date_added'
+      #fieldsets         = ( (None, {'fields':('crew','module_name','description','category','other_category','issue_date','expire_date')}),)
+      list_per_page     = 20
+      #inlines           = [Supplier_AddressesInline]
+      #raw_horizontal_fields = ('',)
+      #readonly_fields       = ('age',)
+      #inlines               = []
+      
+
+
+
+'''class Supplier_Addresses_Admin(admin.ModelAdmin):
+      list_display      =('supplier_address_ID','supplier_ID','address','city','zip_post_code','state_province','country','address_type','date_address_from','date_address_to')
+      search_fields     = ['supplier_ID','city','state_province']
+      list_filter       = ('city','state_province',)
+      #fieldsets         = ( (None, {'fields':('crew','module_name','description','category','other_category','issue_date','expire_date')}),)
+      list_per_page     = 20
+      #raw_horizontal_fields = ('',)
+      #readonly_fields       = ('age',)
+      #inlines               = []
+'''
+class Brands_Admin(admin.ModelAdmin):
+      form = ContractfileForm
+      list_display      =('brand_number','brand_short_name','brand_full_name','date_added','date_updated')
+      search_fields     = ['brand_ID','brand_short_name','brand_full_name']
+      #list_filter       = ('city','state_province',)
+      list_per_page     = 20
+
+class Ref_Item_Categories_Admin(admin.ModelAdmin):
+      list_display      =('item_category_name','item_category_description','date_added','date_updated')
+      search_fields     = ['item_category_name', 'item_category_description']
+      #list_filter       = ('city','state_province',)
+      list_per_page     = 20
+
+class Item_Stock_Levels_Admin(admin.ModelAdmin):
+      list_display      =('stock_number','item_ID','stock_taking_date','quantity_in_stock','date_updated')
+      search_fields     = ['stock_ID','item_ID','stock_taking_date']
+      #list_filter       = ('city','state_province',)
+      list_per_page     = 20
+
+class Inventory_Items_Admin(admin.ModelAdmin):
+      list_display      =('item_number','brand_ID','item_description','average_monthly_usage','reorder_level','reorder_quantity','date_added','date_updated')
+      search_fields     = ['item_ID','brand_ID','item_category_code']
+      list_filter       = ('average_monthly_usage','reorder_level','reorder_quantity',)
+      list_per_page     = 20
+
+class Item_Suppliers_Admin(admin.ModelAdmin):
+      list_display      =('item_supply_number','item_ID','supplier_ID','quantity_supplied','item_supply_date','date_added','date_updated')
+#'delivery_lead_time','standard_price','percentage_discount','minimum_order_quantity','maximum_order_quantity','item_suppl_date')
+      search_fields     = ['item_supply_ID','item_ID','supplier_ID']
+      list_filter       = ('item_ID','supplier_ID','minimum_order_quantity','maximum_order_quantity',)
+      list_per_page     = 20
+
+class Order_Admin(admin.ModelAdmin):
+      list_display      =('ref','quantity','unit','item','quote','date_of_order')
+      search_fields     = ['ref','stock_num' ]
+      #list_filter       = ('item_ID','supplier_ID','minimum_order_quantity','maximum_order_quantity',)
+      list_per_page     = 20
+
+class Supplies_Requisition_Admin(admin.ModelAdmin):
+	obj = Supplies_Requisition()
+	
+	def save_model(self,request,obj,form,change):
+	        obj.last_updated_by  = request.user.username
+	        if obj.requisitioner == "":
+		   obj.requisitioner = request.user.username
+		   
+		   if request.user.is_superuser:
+		    	  obj.department    ="Administration"
+		    
+		   else:
+			  try:
+			  	usn               =  Aics_User.objects.get(username =request.user.username )
+			  	obj.department    =  usn.department.Name_of_department
+			  except Aics_User.DoesNotExist:
+			  	obj.department    ="Admin"
+                   obj.save()	 
+                else:
+                   obj.save()
+	list_display        = ('view','__unicode__','requisitioner','department','order_date','reason_for_required_item','status','Received','order_state','last_updated_by','date_added','date_updated')
+	list_filter         = ('status','requisitioner','department','order_state')
+	#ordering            = ('requisition_ID')
+	inlines             = [OrderInline]
+	search_fields       = ['requisition_ID','department','requisitioner','order_state','status']
+	fieldsets           = ((None, {'classes': ('suit-tab suit-tab-general',),'fields': ('status','order_state','order_date','reason_for_required_item','last_updated_by')}),
+				('Info', {
+            			'classes': ('suit-tab suit-tab-orders',),
+            			'fields': ['Received',]}),)
+	
+	readonly_fields = ('requisitioner','status','department','last_updated_by')
+        date_hierarchy = 'order_date'
+        form = requestForm
+        suit_form_tabs = (('general', 'General'), ('orders', 'Orders'),
+                 )
+	
+	
+admin.site.register(Suppliers,Suppliers_Admin)
+
+#admin.site.register(Supplier_Addresses,Supplier_Addresses_Admin)
+
+admin.site.register(Brands,Brands_Admin)
+
+admin.site.register(Inventory_Items,Inventory_Items_Admin)
+
+admin.site.register(Ref_Item_Categories,Ref_Item_Categories_Admin)
+
+admin.site.register(Item_Stock_Levels,Item_Stock_Levels_Admin)
+
+admin.site.register(Item_Suppliers,Item_Suppliers_Admin)
+
+#admin.site.register(Order,Order_Admin)
+
+admin.site.register(Supplies_Requisition,Supplies_Requisition_Admin)

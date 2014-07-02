@@ -1,0 +1,101 @@
+{% extends "portal/crew.html" %}
+
+{%block title%}<title>CREW </title> {%endblock title%}
+
+ 
+     {% block content %}
+<div class = "container"style="background: #035F8B url(/static/images/bg1.jpg) repeat; background-color:;text-align:center;">  <h3>Welcome to CrewManager</h3></div> 
+  
+
+ <div class="container" style="height:530px;background: #035F8B url(/static/images/bg1.jpg) repeat;  background-color:;">
+ 
+  <div class="container" style="background-color:#C0C0C0;"> 
+ <form class="navbar-search" style = ""action="/crew/search/" method="GET">
+          
+            <input type="text" class="form-search" placeholder="Search Crew" name="search_item"><i class="icon-search"></i>
+            
+          </form> </div>
+  	 
+  	 <div class="container" style="background-color:;">
+  		  <div class="span3" style="background-color:; margin-left:0px; ">  		
+  		   <div  class ="well" style="background-color: ;">
+           <ul class="nav nav-list" style="background-color: ; margin-left:-15px;">
+             
+              <li><a  href ="/crew" ><i class="icon-book"></i>Over view</a></li>
+                {% ifequal user.is_superuser 1 %}
+              <li><a href="/admin/crew/crew_detail/add/" target ="blank"><i class="icon-pencil"></i>Add new Crew Member</a></li>
+                {% endifequal %}
+              <li ><a  href="/crew/list"><i class="icon-th-list"></i>View all Crew Members({{crews.count}})</a></li>
+              <li><a href="/crew/cert_expired" target=""><i class="icon-list-alt"></i>Crew Cert(s) Expiring today ({{xp_tod.count}})</a></li>
+              <li class ="active"  ><a href="/crew/cont_critical" target=""><i class="icon-list"></i>Crew Contract(s) Critical ({{Cxp_tod.count}})</a></li>
+              <li><a href="/aics_portal"><i class="icon-home"></i>General</a></li>
+              
+            </ul>
+            </div>
+         
+  		 
+  		  </div>
+
+    			<div class="span9" style="position: ; background-color:; margin-top:0px;">
+      			<!--Sidebar content-->
+<table class ="table table-striped table-bordered table-condensed " style = "width:; background-color:white; margin-top:0px; margin-left: -20px;"> 
+
+  <thead>
+     <tr>
+  <th><a  style  = " position:relative;margin-left:0px;">CONTRACT TITLE </a></th>
+  <th><a style  = " position:relative;margin-left:0px;">DESCRIPTION</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">VALID UNTIL</a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">BY </a></th>
+  <th><a  style  = " position:relative;margin-left:0px;">DETAILS</a></th>
+  
+
+	</tr>
+	</thead>
+		<tbody>
+	
+			 
+  {% for c in Ccont_critical %}
+<tr>
+  <td>{{c.contract_title }}</td>
+  <td>{{c.description}}</td>
+   <td>{{c.valid_until}}</td> 
+  <td>{{c.crew.Full_name_}}</td>
+  
+  <td><a href="/crew_details/{{c.crew.crew_ID}}/True" >View details</a> </td>
+</tr>
+</p>
+
+{% endfor %}
+</tbody>
+</table>
+
+ 
+<div class="pagination-centered"  style="margin-top:150px;">
+    <span class="step-links">
+        {% if Ccont_critical.has_previous %}
+            <a href="?page={{Ccont_critical.previous_page_number }}">previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ Ccont_critical.number }} of {{ Ccont_critical.paginator.num_pages }}.
+        </span>
+
+        {% if Ccont_critical.has_next %}
+            <a href="?page={{ Ccont_critical.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>           
+ 
+
+</div>
+
+</div>
+
+</div>
+
+  
+
+
+     {% endblock %}
+
+ 

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+{% block title %}
+    <title>Portal</title>
+{% endblock title %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="GOD'S LOVE" >
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-responsive.css"/>
+    
+     
+	  	<link rel="stylesheet" type="text/css" href="/static/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+	
+		<script type="text/javascript" src="/static/js/modernizr.custom.79639.js"></script> 
+    
+    <style type="text/css">
+		
+		
+		
+  		.hr { height:5; width:938px;  border-top:6px solid black; margin-left:-50px;}
+  		.hr hr { display:none; }
+
+    
+      body {
+          padding-top: 60px;
+          padding-bottom: 40px;
+	        
+	
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+
+     #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+      
+      
+      .bs-docs-sidenav {
+					width: 228px;
+					margin: 30px 0 0;
+					padding: 0;
+					background-color: #fff;
+					-webkit-border-radius: 6px;
+					-moz-border-radius: 6px;
+					 border-radius: 6px;
+					-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+					-moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+					box-shadow: 0 1px 4px rgba(0,0,0,.065);
+}
+
+.affix {
+position: fixed;
+}
+
+
+.nav-list {
+padding-right: 15px;
+padding-left: 15px;
+margin-bottom: 0;
+}
+.nav {
+margin-bottom: 20px;
+margin-left: 0;
+list-style: none;
+}
+    </style>
+    
+     
+
+    
+  </head>
+
+  <body data-spy="scroll" data-target=".subnav" data-offset="50" style = "background-color: ;">
+  
+   <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+       <!-- <div class="container"style = "background-color: ;">
+        
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href= "/main_portal">AICS VESSEL MANAGEMENT SYSTEM</a>
+          <div class="btn-group pull-right"> 
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+               <i class="icon-user"></i> welcome <font color ="blue">{{user.username}}</font>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/aics/changepass">Change Password</a></li>
+              <li class="divider"></li>
+              <li><a href="/logout">Sign Out</a></li>
+            </ul>
+          </div>
+          
+        </div>-->
+<div class="container"style = "background-color: ;">
+        
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          
+          <a class="brand" href= "/main_portal">AICS VMS</a>
+          <ul class = "nav">
+             <li {% ifequal request request %}class="active" {% endifequal %}>   <a href = "/aics_portal" >Portal </a></li>
+             <li>   <a href = "/admin" target ="_blank" >Database </a></li>
+             <li>   <a href = "#settings">Settings </a></li>
+          </ul>
+          <div class="btn-group pull-right"> 
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+               <i class="icon-user"></i> welcome <font color ="blue">{{user.username}}</font>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/aics/changepass">Change Password</a></li>
+              <li class="divider"></li>
+              <li><a href="/logout">Sign Out</a></li>
+            </ul>
+          </div>
+          
+        </div>        
+        
+        
+      </div>
+    </div>
+    
+{% block content %}
+   
+
+    <div class="container" style ="height:560px; background: #035F8B url(/static/images/bg1.jpg) repeat; background-color : #ECE5B6;">
+   
+
+   
+   
+      <div class="row-fluid" style="background-color:;">
+       <div class = "span2" style=" background-color: ;">
+          <div class="well sidebar-nav" style=" background-color: ; ">
+            <ul class="nav nav-list">
+            
+              <li class="nav-header">QUICK LINKS</li>
+              <li class=""><a href="/main_portal"> <i class="icon-home"></i> Home</a></li>
+              
+              <li><a href="/crew/list/"> <i class="icon-user"></i> Crew Management</a></li>
+              
+              <li><a href="/report"><i class="icon-print"></i> Reports</a></li>
+              <li class="nav-header">FAVOURITES</li>
+              
+              <li><a href="/certificate"><i class="icon-file"></i> Certificates</a></li>
+                {% ifequal user.is_superuser 1 %}
+              <li><a href="/add_user"><i class="icon-file"></i> Add User</a></li>
+                 
+                 {% endifequal %}
+             
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+
+<div class = "span10" style = "position: ; background-color:;">
+
+<section class="main" >
+			
+				<ul class="ch-grid" style = "background-color: ;">
+				
+					<li style = "position: ; margin-left:-40px; background-color:;">
+					<a href="/crew/list/">	
+						<div class="ch-item ch-img-1"  style="background-image: url(/static/images/krew.jpg);width:;" >
+							
+							<div class="ch-info" style="background-color:;">
+								<h3 style = "color: ;  margin-top:10px;"> Crew</h3>
+									<p style = "margin-top:-80px;">All Crew </p>
+							</div>
+						
+						</div>
+							</a>				
+					</li>
+					<li style = "position: ; background-color:;">
+					 	<a href="/certificate">
+						<div class="ch-item ch-img-2" style="background-image: url(/static/images/certificate.jpg);">
+							<div class="ch-info"  >
+								<h3 style ="margin-left:20px;">Certificates</h3>
+								<p style = "margin-top:-80px;">View all Ship's Certificates</p>
+							</div>
+						</div>
+						</a>
+					</li>
+					<li style = "position: ; background-color:;">
+					 	<a href="/admin/ports_cargo_opr" target = "_blank">
+						<div class="ch-item ch-img-3" 	 style=" background-image: url(/static/images/port.jpg);">
+							<div class="ch-info">
+								<h3>Port Operations</h3>
+								<p  style = "margin-top:-80px;">All Operations on the Port</p>
+							</div>
+						</div>
+       	</a>					
+					</li>
+				</ul>
+			
+			</section>
+			 
+ <section class="main" style = " position: ; background-color:;">
+			
+				<ul class="ch-grid" style = "background-color: ;">
+					<li style = "position: ; margin-left:-40px; background-color:;">
+					<a href="/admin/inventory/inventory_items/add/" target ="_blank">
+						<div class="ch-item ch-img-1"  style="background-image: url(/static/images/invent.jpg);" >
+							<div class="ch-info" style="background-color:;">
+								<h3 style = "color: ; font-size:2em; margin-left:;"> Inventory</h3>
+										<p style = "margin-top:-80px;">View all Inventories</p>
+							</div>
+						</div>
+					</a>					
+					</li>
+					<li>
+					<a href = "/requisition">
+						<div class="ch-item ch-img-2" style="background-image: url(/static/images/purchases.jpg);" >
+							<div class="ch-info">
+								<h3>Requisitions</h3>
+								<p style = "margin-top:-80px;">Add/view requisitions</p>
+							</div>
+						</div>
+						</a>
+					</li>
+					<li>
+					  <a href="/report">  
+						<div class="ch-item ch-img-3" 	 style="background-image: url(/static/images/reports.jpg);">
+							<div class="ch-info">
+								<h3>Reports</h3>
+								<p style = "margin-top:-80px;">View all reports</p>
+							</div>
+						</div>
+							</a>					
+					</li>
+				</ul>
+				
+			</section>
+			 
+ 
+ </div>
+   
+
+
+</div>
+
+
+
+{% endblock %}
+ 
+ 
+
+  </div>    
+	 <div class="container" style ="">
+	        <div class="footer" >   
+
+
+           
+       <div class="alert alert-info">    
+       <strong class= "pull-right" style = "background-color:;">Powered by<a href="#blupay"> blupay systems </a> </strong>
+           {% ifequal user.is_superuser 1 %}
+         <div style ="background-color:;">
+          <marquee behavior="scroll" direction="left"  onmouseover="this.stop();" onmouseout="this.start();">
+        
+           {% ifequal cert_critical.count 0 %}
+      
+           {% else %}
+          
+      
+     <span class="label label-warning" style = " font-size:1em; color:black;">Ship's certificates(Critical) : {{cert_critical.count}} &nbsp &nbsp &nbsp<a href ="/certificate/cert_critical" style= "color:blue;" > view...</a> 	
+				  </span>	
+				    	 {% endifequal %}
+		
+		 &nbsp &nbsp &nbsp
+		
+           {% ifequal cert_expiring_today.count 0 %}
+      
+           {% else %}
+       
+         &nbsp &nbsp<span class="label label-warning" style = " font-size:1em; color:black;">Ship's certificates Expiring Today : {{cert_expiring_today.count}}&nbsp <a href = "/certificate/cert_expiring_today" style= "color:blue;">view..</a>      
+	     </marquee> 
+	          {% endifequal %}
+	</span> 
+
+   </div>
+                        {% else %}
+           <div style ="background-color:;">
+          <marquee behavior="scroll" direction="left"  onmouseover="this.stop();" onmouseout="this.start();">
+        
+          
+          
+      
+     <span class="label label-warning" style = " font-size:1em; color:black;"> AICS VESSEL MANAGEMENT SYSTEM  	
+				  </span>	
+				    	 
+		
+       
+               
+	     </marquee> 
+	         
+	</span> 
+
+   </div>
+						{% endifequal %}		    
+    
+    
+     </div></div>
+   </div>
+    
+
+
+
+
+
+
+
+    <!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   <!-- <script src="/static/bootstrap/js/jquery.js"></script> -->
+   <!-- <script src="/static/bootstrap/js/bootstrap-transition.js"></script>-->
+    <script src="/static/bootstrap/js/bootstrap-alert.js"></script>
+    <!-- <script src="/static/bootstrap/js/bootstrap-modal.js"></script> -->
+    <script src="/static/bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-scrollspy.js"></script>
+    <!-- <script src="/static/bootstrap/js/bootstrap-tab.js"></script>-->
+    <script src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
+     <!-- <script src="/static/bootstrap/js/bootstrap-popover.js"></script> -->
+    <script src="/static/bootstrap/js/bootstrap-button.js"></script>
+     <!--<script src="/static/bootstrap/js/bootstrap-collapse.js"></script> -->
+    <!-- <script src="/static/bootstrap/js/bootstrap-carousel.js"></script>-->
+    <script src="/static/bootstrap/js/bootstrap-typeahead.js"></script>
+   <!-- <script src="/static/bootstrap/js/bootstrap-modal.js"></script> -->
+
+ 
+  
+   <script src="/static/bootstrap/js/jquery.js"></script>	
+   
+	 <script src="/static/bootstrap/js/bootstrap.js"></script>
+	<!--<script src="/static/bootstrap/js/bootstrap-transition.js"></script>-->
+         <script src="/static/bootstrap/js/bootstrap-tab.js"></script>
+   <script type="text/javascript">
+    $(function (){
+    $('#myTab').tab('show');
+
+    </script>
+<script src="/static/bootstrap/js/bootstrap-carousel.js"></script>
+	<script type="text/javascript">
+ 		 $(function(){
+     	 $('#myCarousel').carousel({interval:5000});
+ 	 })
+ 	 </script>
+<script src="/static/bootstrap/js/bootstrap-collapse.js"></script>
+ 	 <script type="text/javascript">
+ 	 	$(function(){
+ 	 	$(".collapse").collapse();
+ 	 	})	
+ 	 	</script>
+
+
+	 <script src="/static/bootstrap/js/bootstrap-transition.js"></script>
+	 <script src="/static/bootstrap/js/bootstrap-alert.js"></script>
+		<script type="text/javascript">
+ 		 $(function(){
+     	 $(".alert").alert();
+ 	 })
+ 	 </script>
+ 	 
+ 	 <script src="/static/bootstrap/js/bootstrap-modal.js"></script>
+ 	 <script type="text/javascript">
+ 	 	$(function(){
+ 	 	$('#myModal').modal('show');
+ 	 	
+ 	 	})	
+ 	 	</script>
+ 	 	
+ 	 	 <script src="/static/bootstrap/js/bootstrap-popover.js"></script>
+ 	 <script type="text/javascript">
+ 	 	$(function(){
+ 	 	$('.example').popover(options);
+ 	 	})	
+ 	 	</script>
+  
+  
+ </body> 
+</html>

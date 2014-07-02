@@ -1,0 +1,101 @@
+{% extends "portal/crew.html" %}
+
+{%block title%}<title>CREW </title> {%endblock title%}
+
+
+ 
+     {% block content %}
+  
+<div class = "container"style="background-color:;text-align:center;">  <h3>Welcome to CrewManager</h3></div>
+ <div class="container" style="background: #035F8B url(/static/images/bg1.jpg) repeat; background-color:#ECE5B6;">
+ 
+ 
+ <div class="container" style="background-color:#C0C0C0;"> 
+ <form class="navbar-search" style = ""action="/crew/search/" method="GET"><i class="icon-search"></i>
+          
+            <input type="text" class="form-search" placeholder="Search Crew" name="search_item">
+            
+          </form> </div>
+  	<div class="container" style="background-color:;">
+  		  <div class="span3" style="background-color:; margin-left:0px; ">  		
+  		   <div  class ="well" style="background-color: ;">
+           <ul class="nav nav-list" style="background-color: ; margin-left:-15px;">
+             
+              <li><a  href ="/crew" ><i class="icon-book"></i>Over view</a></li>
+              {% ifequal user.is_superuser 1 %}
+              <li><a href="/admin/crew/crew_detail/add/" target ="blank"><i class="icon-pencil"></i>Add new Crew Member</a></li>
+               {% endifequal %}
+              <li class ="active"><a  href="/crew/list"><i class="icon-th-list"></i>View all Crew Members({{crews.count}})</a></li>
+              <li><a href="/crew/cert_expired" target=""><i class="icon-list-alt"></i>Crew Cert(s) Expiring today ({{Cxp_tod.count}})</a></li>
+               <li><a href="/crew/cont_critical" target=""><i class="icon-list"></i>Crew Contract(s) Critical ({{Ccont_critical.count}})</a></li>
+              <li><a href="/aics_portal"><i class="icon-home"></i>General</a></li>
+              
+            </ul>
+            </div>
+         
+  		 
+  		  </div>
+
+    			<div class="span9" style="position: ; background-color:; margin-top:0px;">
+      			<!--Sidebar content-->
+
+             <h3>SEARCH RESULTS ({{krew.count}}) Found</h3><hr/>
+           <div id="demo" class="collapse in" style ="overflow:auto; "> … </div>
+
+             <div class=" container-fluid"    style = "margin-left:-30px; width:930px;"> 
+
+
+{% for c in crew %}
+
+<blockquote>
+
+	<a href="/crew_details/{{c.crew_ID}}/True" target=""><h4 style="text-align:justify;" >{{c}}</h4></a><br/>
+	<p style="font-size:14px; text-align:justify;" >
+	
+	{%ifequal c.thumbnail ''%}
+ <img src="/static/images/crew.jpg" style="margin-left:13px; margin-top:0px; height:40px; width:40px;"/> 
+ {%else%}
+ <img src="/media/{{c.thumbnail}}" style="margin-left:13px; margin-top:0px; height:40px; width:40px;"/> 
+ 
+ {%endifequal%}
+	{{c.Full_name_}}<a href="/crew_details/{{c.crew_ID}}/True" target="">...view full details</a></p>
+
+<div style =" width: 860px;"> 	<hr/> </div>
+</blockquote>
+{% endfor %}
+
+
+
+
+
+</div>
+                 
+     <div class="pagination-centered"  style="margin-top:150px;">
+    <span class="step-links">
+        {% if crew.has_previous %}
+            <a href="?page={{ crew.previous_page_number }}">previous</a>
+        {% endif %}
+        
+        <span class="current">
+            Page {{ crew.number }} of {{ crew.paginator.num_pages }}.
+        </span>
+
+        {% if crew.has_next %}
+            <a href="?page={{ crew.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>       
+   
+</div>
+
+
+
+</div>
+</div>
+
+  
+
+
+     {% endblock %}
+
+ 

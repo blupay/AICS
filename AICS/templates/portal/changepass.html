@@ -1,0 +1,21 @@
+{% extends "portal/mainpage.html" %}
+
+{%block title%}<title>CREW </title> {%endblock title%}
+
+
+{% block content %}
+
+<div  class="container" style="margin-top:60px; background-color:white;">
+
+<form class = "form-signin" action="." method="post" style="margin-right:60px;">
+{% csrf_token %}
+		
+		<legend><b style="">Change Password</b></legend>
+		{{ form.as_p }}
+<button style="margin-left:0px; margin-top:40px;"class="btn btn-primary btn-large" type="submit" value="" >
+<b>Change Password</b></button>
+    
+  		</form>	
+</div>
+
+ {% endblock %}

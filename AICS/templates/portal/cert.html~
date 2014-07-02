@@ -1,0 +1,78 @@
+{% extends "portal/certicate.html" %}
+
+{%block title%}<title>CERTIFICATE </title> {%endblock title%}
+
+<style>
+  		.hr { height:5; width:938px;  border-top:6px solid black; margin-left:-50px;}
+  		.hr hr { display:none; }
+	</style>
+	
+
+ 
+     {% block content %}
+  <dir style="margin-left:1000px;">  
+     <form class="navbar-search pull-left" action="/crew/search/" method="GET">
+          
+            <input type="text" class="form-search" placeholder="Search Crew" name="search_item">
+            
+          </form>
+          </dir> 
+
+ <div class="container-fluid" style="margin-top :90px;">
+  	
+  		  <div class="span3" style="position: relative;">  		
+  		   <div  class ="well" >
+            <ul class="nav nav-list">
+             
+              <li class="active"><a  href ="/certificate">VESSEL CERTICATES</a></li>
+              	 {% for c in cert %}
+              <li><a href="/cert_details/{{c.id}}/True" target="">{{c.document_name}}</a></li>
+             
+              	{% endfor %}
+              <li><a href="/aics_portal">General</a></li>
+              
+            </ul>
+            </div>
+         
+  		 
+  		  </div>
+
+    			<div class="span9" style="position: relative;">
+    			
+        
+        
+
+
+                 
+                
+            
+            
+             
+             
+           
+             
+          
+
+		
+  		
+  
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+  
+
+
+     {% endblock %}
+
+ 

@@ -1,0 +1,40 @@
+{% extends "portal/requisition.html" %}
+
+
+{% block content %}
+
+
+<div class= "container" style="background-color : white; overflow:auto; width:1170px; height:800px; border:1px solid blue; background-color:; margin-top:120px; margin-bottom:;">
+
+
+
+<form method = "post" class = "form-outline" action ="."> 
+                 {{form.as_p}}
+             
+               <button type = "submit" name = "vital" value = "1" class="btn btn-primary btn-large" >Save</button>
+             </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+{% endblock %}

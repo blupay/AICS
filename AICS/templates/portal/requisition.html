@@ -1,0 +1,132 @@
+{% extends "portal/mainpage.html" %}
+
+{%block title%}<title>REQUISITION </title> {%endblock title%}
+
+
+	
+
+ 
+     {% block content %}
+   
+     
+<div class = "container"style="background-color:#C0C0C0;text-align:center;">  <h3>Welcome to Requisitions</h3></div>  
+  
+ <div class="container" style ="height:530px; background-color :">
+    
+  	 <div class="container" style="background-color:;">
+  		  <div class="span3" style="background-color:; margin-left:0px; ">  		
+  		   <div  class ="well" style="background-color: ;">
+           <ul class="nav nav-list" style="background-color: ; margin-left:-15px;">
+              <li class=""><a  href ="/aics_portal"><i class="icon-home"></i>Main Page</a></li>
+              <li class="" style="background-color:#BDC8E6;"><a  href ="/requisition"><i class="icon-file"></i>Requisitions</a></li>
+          <!--    
+               <li><a  href ="/requisition/today/"><i class="icon-book"></i>Today({{requisitions_tod.count}} Pending)</a></li>
+               
+               
+               
+              <li><a href="/requisition/week/" ><i class="icon-book"></i>This Week ({{requisitions_week.count}} Pending)</a></li>
+               <li><a href="/requisition/month/" ><i class="icon-book"></i>This Month ({{requisitions_month.count}})</a></li>
+               <li><a href="/requisition/year/" ><i class="icon-book"></i>This Year ({{requisitions_year.count}})</a></li>
+               <li><a href="/requisition/all/" ><i class="icon-book"></i>All ({{requisitions_all.count}})</a></li>
+              
+              -->
+       <div class="accordion" id="accordion2" style="background-color:white">
+			<div class="accordion-group">
+					<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+									<i class="icon-hand-down"></i> Today
+											</a>
+						</div>
+					<div id="collapseOne" class="accordion-body collapse">
+						<div class="accordion-inner">
+				
+				<li><a  href ="/requisition/today/">Pending ({{requisitions_tod.count}})</a></li>
+				
+				<li><a  href ="/requisition/today/approved/">Approved ({{requisitions_tod_approved.count}})</a></li>
+				<li> <a  href ="/requisition/today/all/">All ({{requisitions_tod_all.count}})</a></li>
+			
+						</div>
+					</div>
+				</div>
+				<div class="accordion-group">
+						<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+						<i class="icon-align-right"></i> This Week
+							</a>
+						</div>
+						<div id="collapseTwo" class="accordion-body collapse in">
+						<div class="accordion-inner">
+				<li><a href="/requisition/week/" >Pending ({{requisitions_week.count}})</a></li>
+				<li>Approved ({{requisitions_week_approved.count}})</li>
+				<li>All ({{requisitions_week_all.count}})</li>
+							</div>
+						</div>         
+ 						</div>
+ 						
+               <div class="accordion-group">
+						<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+						<i class="icon-calendar"></i> This Month
+							</a>
+						</div>
+						<div id="collapseThree" class="accordion-body collapse in">
+						<div class="accordion-inner">
+				<li>Pending ({{requisitions_month.count}})</li>
+				<li>Approved ()</li>
+				<li>All ()</li>
+							</div>
+						</div>         
+ 						</div> 						
+ 						<div class="accordion-group">
+						<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+						<i class="icon-align-justify"></i> All
+							</a>
+						</div>
+						<div id="collapseFour" class="accordion-body collapse in">
+						<div class="accordion-inner">
+				<li>Pending ({{requisitions_all.count}})</li>
+				<li>Approved ()</li>
+				<li>All ()</li>
+							</div>
+						</div>         
+ 						</div> 	
+ 						
+ 						
+ 						
+ 						
+ 						
+ 					
+ 					</div>                             
+              
+            </ul>
+            </div>
+         
+  		 
+  		  </div>
+
+  
+
+    			<div class="span9" style="position: ; background-color:black; margin-top:0px;">
+      			<!--Sidebar content-->
+      <span class="thumbnail">
+    <img alt="260x180" data-src="holder.js/260x180" style="width: 900px; height: 340px;" src="/static/adobia/ADOBIA7.jpg"> </img>
+                              
+                     
+                    </span>
+      
+        
+
+</div>
+
+
+
+</div>
+</div>
+
+  
+
+
+     {% endblock %}
+
+ 

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+{% block title %}
+    <title>Main</title>
+{% endblock title %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="GOD'S LOVE" >
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-responsive.css"/>
+    
+     
+	  	<link rel="stylesheet" type="text/css" href="/static/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+	
+		<script type="text/javascript" src="/static/js/modernizr.custom.79639.js"></script> 
+    
+    <style type="text/css">
+		
+		
+		
+  		.hr { height:5; width:938px;  border-top:6px solid black; margin-left:-50px;}
+  		.hr hr { display:none; }
+
+    
+      body {
+          padding-top: 60px;
+          padding-bottom: 40px;
+	        
+	
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+
+     #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+      
+      
+      #chart {
+        height: 300px;
+    }
+
+    #stats-table {
+        /*margin-top: 10px;*/
+    }
+
+    #stats-table td {
+        font-size: 11px;
+        padding: 6px;
+    }
+
+    #notifications div {
+        margin: 3px 0px;
+        font-size: 11px;
+    }
+    </style>
+    
+     
+    
+  </head>
+
+  <body data-spy="scroll" data-target=".subnav" data-offset="50" style = "background-color: ;">
+  
+   <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container"style = "background-color: ;">
+        
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand active" href= "/main_portal">AICS VMS</a>
+          <ul class = "nav">
+             <li>   <a href = "/aics_portal" >Portal </a></li>
+             <li>   <a href = "/admin" target ="_blank" >Database </a></li>
+             <li>   <a href = "#settings">Settings </a></li>
+          </ul>
+          <div class="btn-group pull-right"> 
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+               <i class="icon-user"></i> welcome <font color ="blue">{{user.username}}</font>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/aics/changepass">Change Password</a></li>
+              <li class="divider"></li>
+              <li><a href="/logout">Sign Out</a></li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+{% block content %}
+<div class="row-fluid" style="margin-top:0px;height:; background-color:white;">
+<div class ="container">
+<div class="span12 well well-small" style="box-sizing: border-box;">
+        <h2>Welcome to AICS VESSEL MANAGEMENT SYSTEM!!</h2>
+    </div></div>
+<div class = "container" style="background-color:;height:550px;">
+
+
+
+
+  <div class="span5" style = "background-color:black;">  
+  
+  <span class="thumbnail">
+                  <img alt="260x180" data-src="holder.js/260x180" style="width: 600px; height: 340px;" src="/static/adobia/ADOBIA7.jpg">
+                              
+                     
+                    </span>
+  
+  
+  
+  </div>
+    <div class="span3">	
+	<h3>Current Statistics</h3>
+        <table border="0" cellpadding="3" class="table table-bordered" id="stats-table">
+            <tbody>
+            <tr>
+                <td>Total Crew Members</td>
+                <td>{{allCrew.count}}</td>
+            </tr>
+            <tr>
+                <td>Males</td>
+                <td>{{MaleCrew.count}}</td>
+            </tr>
+            <tr>
+                <td>Females</td>
+                <td>{{FemaleCrew.count}}</td>
+            </tr>
+           
+            
+            
+            
+        </tbody></table>    
+    
+    </div>
+      <div id ="notifications"class="span4">
+      
+      <h3>Notifications</h3>
+
+        <div class="alert alert-danger">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4>Ships Certificates Critical</h4>
+            <b>{{cert_critical.count}}</b> Ship's Certs Expiring in the next two months<a href ="/certificate/cert_critical">  Click to view</a>
+            
+        </div>
+        <div class="alert alert-warning">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4>Crews Contract Critical</h4>
+            <b>{{CrewCont_critical.count}}</b> Crew Contracts Expiring in the next two months <a  href="/crew/cont_critical" >  Click To view</a>
+        </div>
+
+        <div class="alert alert-info">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4>Requisitions</h4>
+             <b>{{requisitions_tod.count}}</b> Requisitions made today(<b>Pending</b>) <a  href="/requisition/today/" >  Click To view</a>
+        
+        </div>
+
+    </div>
+      </div>
+      </div>
+
+
+
+</div>
+
+   
+{% endblock %}
+ 
+ 
+
+  </div>    
+	 <div class="container" style ="">
+	        <div class="footer" >   
+<div class="alert alert-info" style="height:30px;"> 
+<strong class= "pull-right" style = "background-color:;">Powered by<a href="#blupay"> blupay systems </a> </strong>
+              
+   </div> 
+   
+   </div>
+    
+
+
+
+
+
+
+
+    <!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   <!-- <script src="/static/bootstrap/js/jquery.js"></script> -->
+   <!-- <script src="/static/bootstrap/js/bootstrap-transition.js"></script>-->
+    <script src="/static/bootstrap/js/bootstrap-alert.js"></script>
+    <!-- <script src="/static/bootstrap/js/bootstrap-modal.js"></script> -->
+    <script src="/static/bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-scrollspy.js"></script>
+    <!-- <script src="/static/bootstrap/js/bootstrap-tab.js"></script>-->
+    <script src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
+     <!-- <script src="/static/bootstrap/js/bootstrap-popover.js"></script> -->
+    <script src="/static/bootstrap/js/bootstrap-button.js"></script>
+     <!--<script src="/static/bootstrap/js/bootstrap-collapse.js"></script> -->
+    <!-- <script src="/static/bootstrap/js/bootstrap-carousel.js"></script>-->
+    <script src="/static/bootstrap/js/bootstrap-typeahead.js"></script>
+   <!-- <script src="/static/bootstrap/js/bootstrap-modal.js"></script> -->
+
+ 
+  
+   <script src="/static/bootstrap/js/jquery.js"></script>	
+   
+	 <script src="/static/bootstrap/js/bootstrap.js"></script>
+	<!--<script src="/static/bootstrap/js/bootstrap-transition.js"></script>-->
+         <script src="/static/bootstrap/js/bootstrap-tab.js"></script>
+   <script type="text/javascript">
+    $(function (){
+    $('#myTab').tab('show');
+
+    </script>
+<script src="/static/bootstrap/js/bootstrap-carousel.js"></script>
+	<script type="text/javascript">
+ 		 $(function(){
+     	 $('#myCarousel').carousel({interval:5000});
+ 	 })
+ 	 </script>
+<script src="/static/bootstrap/js/bootstrap-collapse.js"></script>
+ 	 <script type="text/javascript">
+ 	 	$(function(){
+ 	 	$(".collapse").collapse();
+ 	 	})	
+ 	 	</script>
+
+
+	 <script src="/static/bootstrap/js/bootstrap-transition.js"></script>
+	 <script src="/static/bootstrap/js/bootstrap-alert.js"></script>
+		<script type="text/javascript">
+ 		 $(function(){
+     	 $(".alert").alert();
+ 	 })
+ 	 </script>
+ 	 
+ 	 <script src="/static/bootstrap/js/bootstrap-modal.js"></script>
+ 	 <script type="text/javascript">
+ 	 	$(function(){
+ 	 	$('#myModal').modal('show');
+ 	 	
+ 	 	})	
+ 	 	</script>
+ 	 	
+ 	 	 <script src="/static/bootstrap/js/bootstrap-popover.js"></script>
+ 	 <script type="text/javascript">
+ 	 	$(function(){
+ 	 	$('.example').popover(options);
+ 	 	})	
+ 	 	</script>
+  
+  
+ </body> 
+</html>

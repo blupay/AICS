@@ -1,0 +1,101 @@
+{% extends "portal/certificate.html" %}
+
+{%block title%}<title>CERTIFICATE </title> {%endblock title%}
+
+
+	
+
+ 
+     {% block content %}
+  
+
+  <div class="container" style ="background-color :; background: #035F8B url(/static/images/bg1.jpg) repeat; height:;">
+  	
+     <div class="container" style=" background-color:white;" > 
+          <h2 style="margin-left:400px;">{{cert.attachment}}&nbsp &nbsp attachment(s) under {{cert.document_name}} </h2>   
+       
+          </div>
+    			<div class="span9" style="position: relative;">
+    			
+        
+        <div class="alert alert-block alert-error fade in" style="margin-left: 35px; width: 980px;">
+            <a class="close" data-dismiss="alert" href="/certificate">×</a>
+              
+				<table class ="table  " style = "width:938px; margin-left: 50px;"> 
+
+  				<div>
+     <tr>
+  <th><a  style  = " position:relative;margin-left:0px;">ID </a></th>
+  
+  <th><a style  = " position:relative;margin-left:0px;"> Click on Image to view file attached</a></th>
+   
+  
+
+	</tr>
+		<tbody>
+			</div>
+			 
+  {% for c in cert_file %}
+<tr>
+  <td>File #{{c.file_number }}</td>
+ 
+  <td> 
+
+  <a href="http://0.0.0.0:8000/media/{{c.Upload_file}}"target="blank" >
+
+ <img src="/static/images/certificate.jpg" style="width: 100px; height: 160px;"/> 
+ 
+</a> 
+  </td>
+</tr>
+
+
+{% endfor %}
+</tbody>
+</table>
+<p>
+              <a class="btn btn-primary" href="/certificate">close</a>
+            </p>
+ </div>     
+     
+     
+   
+            
+           
+            
+          </div>
+
+                 
+                 
+                
+            
+            
+             
+             
+           
+             
+          
+
+		
+  		
+  
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+  
+
+
+     {% endblock %}
+
+ 
