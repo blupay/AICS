@@ -4,7 +4,7 @@ MySQL-python==1.2.3
 pytz==2013b
 pyxdg==0.20
 Pillow==2.3.0
-reportlab
+reportlab==2.5
 django-polymorphic==0.2
 South==0.7.6
 pisa==3.0.33
