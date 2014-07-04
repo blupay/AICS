@@ -1,5 +1,5 @@
 Django==1.4.3
-PIL==1.1.7
+Pillow==2.3.0
 dj-database-url==0.2.1
 html5lib==1.0b3
 httplib2==0.7.4
@@ -22,7 +22,7 @@ Whoosh==0.3.18
 
 
 
-Pillow==2.3.0
+
 django-polymorphic==0.2
 South==0.7.6
 anyjson==0.3.3
