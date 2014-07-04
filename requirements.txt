@@ -31,7 +31,6 @@ django-evolution==0.6.9
 django-extensions==1.1.1
 django-filer==0.9.5
 django-import-export==0.1.4
-django-model-report==0.1.5
 django-mptt==0.5.5
 django-nose==1.1
 django-reversion==1.8.0
