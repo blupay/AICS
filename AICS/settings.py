@@ -2,6 +2,9 @@
 import dj_database_url
 import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+
+
 SITE_ROOT=os.path.dirname(os.path.realpath(__file__))
 
 # Celery import
@@ -74,33 +77,13 @@ USE_TZ = True
 
 
 
-AWS_ACCESS_KEY_ID = "AKIAJ74LCB66L66FPHGA"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_STORAGE_BUCKET_NAME = "aicsfiles"
-AWS_S3_CUSTOM_DOMAIN = "aicsfiles"
-AWS_REDUCED_REDUNDANCY = False # We enable this server-wide on our staging server's S3 buckets
-AWS_PRELOAD_METADATA = True # You want this to be on!
-AWS_S3_SECURE_URLS = False
-AWS_HEADERS = { 'Cache-Control': 'max-age=2592000' }
-AWS_QUERYSTRING_AUTH = False
+#MEDIA_ROOT = 'smedia/'
 
-
-MY_DEFAULT_STORAGE = 'crew.s3storage.S3BotoStorage' # Used below
-DEFAULT_FILE_STORAGE = MY_DEFAULT_STORAGE
-COMPRESS_STORAGE = MY_DEFAULT_STORAGE # use with django-compressor
-STATICFILES_STORAGE = MY_DEFAULT_STORAGE # use with django-staticfiles
-FILER_PUBLICMEDIA_STORAGE = 'crew.example_prefixes.filer_storage_s3' # user with django-filer
-# Finally, we want to use reduced redundancy storage for all thumbnails:
-FILER_PUBLICMEDIA_THUMBNAIL_STORAGE = 'crew.example_prefixes.filer_thumb_storage_s3'
-THUMBNAIL_DEFAULT_STORAGE = 'crew.example_prefixes.S3BotoStorageReducedRedundancy'
-
-
-MEDIA_ROOT = 'smedia/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/smedia/'
+#MEDIA_URL = '/smedia'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -288,3 +271,38 @@ LOGGING = {
         },
     }
 }
+
+
+
+AWS_ACCESS_KEY_ID = "AKIAJ74LCB66L66FPHGA"
+AWS_SECRET_ACCESS_KEY = "mhYmTFrVmaXeGo0kUiGJ4G2CN5htCInxks8662cZ"
+AWS_STORAGE_BUCKET_NAME = "aicsfiles"
+AWS_S3_CUSTOM_DOMAIN = "s3-us-west-2.amazonaws.com/aicsfiles"
+AWS_REDUCED_REDUNDANCY = False # We enable this server-wide on our staging server's S3 buckets
+AWS_PRELOAD_METADATA = True # You want this to be on!
+AWS_S3_SECURE_URLS = False
+AWS_HEADERS = { 'Cache-Control': 'max-age=2592000' }
+AWS_QUERYSTRING_AUTH = False
+
+
+
+
+MY_DEFAULT_STORAGE = 'crew.s3storage.S3BotoStorage' # Used below
+DEFAULT_FILE_STORAGE = MY_DEFAULT_STORAGE
+COMPRESS_STORAGE = MY_DEFAULT_STORAGE # use with django-compressor
+STATICFILES_STORAGE = MY_DEFAULT_STORAGE # use with django-staticfiles
+FILER_PUBLICMEDIA_STORAGE = 'crew.example_prefixes.filer_storage_s3' # user with django-filer
+# Finally, we want to use reduced redundancy storage for all thumbnails:
+FILER_PUBLICMEDIA_THUMBNAIL_STORAGE = 'crew.example_prefixes.filer_thumb_storage_s3'
+THUMBNAIL_DEFAULT_STORAGE = 'crew.example_prefixes.S3BotoStorageReducedRedundancy'
+
+S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+STATIC_DIRECTORY = '/static/'
+MEDIA_DIRECTORY = '/smedia/'
+STATIC_URL = S3_URL + STATIC_DIRECTORY
+MEDIA_URL = S3_URL + MEDIA_DIRECTORY
+MEDIA_ROOT = S3_URL + MEDIA_DIRECTORY
+
+
+
+

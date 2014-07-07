@@ -39,6 +39,8 @@ FILER_FILE_MODELS = getattr(settings, 'FILER_FILE_MODELS',
     )
 )
 
+
+
 DEFAULT_FILE_STORAGE = getattr(settings, 'DEFAULT_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage')
 
 MINIMAL_FILER_STORAGES = {
@@ -86,6 +88,7 @@ DEFAULT_FILER_STORAGES = {
             'ENGINE': 'filer.storage.PrivateFileSystemStorage',
             'OPTIONS': {
                 'location': os.path.abspath(os.path.join(settings.MEDIA_ROOT, '../smedia/filer_private')),
+                            
                 'base_url': '/smedia/filer_private/',
             },
             'UPLOAD_TO': 'filer.utils.generate_filename.randomized',
@@ -95,6 +98,7 @@ DEFAULT_FILER_STORAGES = {
             'ENGINE': 'filer.storage.PrivateFileSystemStorage',
             'OPTIONS': {
                 'location': os.path.abspath(os.path.join(settings.MEDIA_ROOT, '../smedia/filer_private_thumbnails')),
+		
                 'base_url': '/smedia/filer_private_thumbnails/',
             },
             'THUMBNAIL_OPTIONS': {},
