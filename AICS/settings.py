@@ -2,8 +2,7 @@
 import dj_database_url
 import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
-
+import sys
 
 SITE_ROOT=os.path.dirname(os.path.realpath(__file__))
 
@@ -25,7 +24,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '.herokuapp.com').split(':')
 #import dj_database_url
 
 DATABASES = { 
-	     'default' : dj_database_url.config(default="sqlite:/AICSDB.db")
+	     'default' : dj_database_url.config(default="sqlite3:/AICSDB.db")
 
 		}
 
